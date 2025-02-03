@@ -14,13 +14,12 @@ import com.example.myapplication.data.remote.ApiService
 import com.example.myapplication.ui.screen.login.LoginScreen
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.example.myapplication.viewmodel.LoginViewModel
-import com.example.myapplication.viewmodel.LoginViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val loginViewModel: LoginViewModel by viewModels {
-        LoginViewModelFactory(ApiService())
-    }
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
