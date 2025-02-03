@@ -2,6 +2,7 @@ package com.example.myapplication.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myapplication.data.model.User
 import com.example.myapplication.data.remote.ApiService
 import com.example.myapplication.ui.state.LoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +24,7 @@ class LoginViewModel @Inject constructor(private val apiService: ApiService) : V
             val isSuccess = apiService.login(username, password)
 
             if (isSuccess) {
-                _loginState.value = LoginState.Success(username)
+                _loginState.value = LoginState.Success(User(username, password))
             } else {
                 _loginState.value = LoginState.Error("Invalid username or password")
             }

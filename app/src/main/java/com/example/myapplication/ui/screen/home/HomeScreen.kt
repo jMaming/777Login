@@ -12,9 +12,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.R
+import com.example.myapplication.data.model.User
 
 @Composable
-fun HomeScreen(userName: String) {
+fun HomeScreen(user: User) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -22,7 +23,7 @@ fun HomeScreen(userName: String) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = LocalContext.current.getString(R.string.welcome, userName))
+        Text(text = LocalContext.current.getString(R.string.welcome, user.userName))
         Text(LocalContext.current.getString(R.string.welcome_home_screen))
     }
 }
@@ -30,5 +31,5 @@ fun HomeScreen(userName: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    HomeScreen("admin")
+    HomeScreen(User("admin", "password"))
 }

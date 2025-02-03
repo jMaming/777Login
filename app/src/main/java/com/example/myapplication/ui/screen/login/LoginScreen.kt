@@ -55,7 +55,7 @@ fun LoginScreen(loginViewModel: LoginViewModel) {
                 is LoginState.Success -> {
                     isLoading = false
                     val successState = loginState as LoginState.Success
-                    HomeScreen(successState.username)
+                    HomeScreen(successState.user)
                 }
 
                 is LoginState.Error -> {
