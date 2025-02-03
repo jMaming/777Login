@@ -66,7 +66,7 @@ fun LoginScreen(loginViewModel: LoginViewModel) {
                 }
             }
 
-            if (loginState is LoginState.Loading || loginState is LoginState.Error || loginState is LoginState.None) {
+            if (loginState is LoginState.Error || loginState is LoginState.None) {
                 // Username Field
                 TextField(
                     value = username,
