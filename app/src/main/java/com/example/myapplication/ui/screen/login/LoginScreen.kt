@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.screen.login
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,9 +21,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.myapplication.data.remote.NetworkRepository
 import com.example.myapplication.data.remote.ApiService
 import com.example.myapplication.ui.components.LoadingDialog
 import com.example.myapplication.ui.screen.home.HomeScreen
@@ -35,7 +38,7 @@ fun LoginScreen(loginViewModel: LoginViewModel) {
     var password by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
-
+    val context = LocalContext.current
     val loginState by loginViewModel.loginState.collectAsState()
 
     Box {
@@ -98,7 +101,17 @@ fun LoginScreen(loginViewModel: LoginViewModel) {
 
                 // Login Button
                 Button(
-                    onClick = { loginViewModel.login(username, password) },
+                    onClick = {
+                        if (loginViewModel.hasInternetConnection(context)) {
+                            loginViewModel.login(username, password)
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "Please check your internet connection.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text("Login")
@@ -116,5 +129,10 @@ fun LoginScreen(loginViewModel: LoginViewModel) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    LoginScreen(loginViewModel = LoginViewModel(ApiService()))
+    LoginScreen(
+        loginViewModel = LoginViewModel(
+            ApiService(),
+            NetworkRepository()
+        )
+    )
 }

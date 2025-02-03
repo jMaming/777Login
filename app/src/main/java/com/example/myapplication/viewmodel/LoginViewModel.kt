@@ -1,7 +1,9 @@
 package com.example.myapplication.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myapplication.data.remote.NetworkRepository
 import com.example.myapplication.data.model.User
 import com.example.myapplication.data.remote.ApiService
 import com.example.myapplication.ui.state.LoginState
@@ -12,7 +14,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val apiService: ApiService) : ViewModel() {
+class LoginViewModel @Inject constructor(
+    private val apiService: ApiService,
+    private val networkRepository: NetworkRepository,
+) : ViewModel() {
 
     private val _loginState = MutableStateFlow<LoginState>(LoginState.None)
     val loginState: StateFlow<LoginState> = _loginState
@@ -30,4 +35,7 @@ class LoginViewModel @Inject constructor(private val apiService: ApiService) : V
             }
         }
     }
+
+    fun hasInternetConnection(context: Context) =
+        networkRepository.isInternetAvailable(context)
 }
