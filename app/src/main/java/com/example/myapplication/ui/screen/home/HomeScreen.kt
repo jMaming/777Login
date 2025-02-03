@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.R
 
@@ -24,4 +25,10 @@ fun HomeScreen(userName: String) {
         Text(text = LocalContext.current.getString(R.string.welcome, userName))
         Text(LocalContext.current.getString(R.string.welcome_home_screen))
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+    HomeScreen("admin")
 }
