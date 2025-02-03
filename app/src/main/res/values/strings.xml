@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="loading">Loading...</string>
+    <string name="welcome">Welcome %s</string>
+    <string name="welcome_home_screen">Welcome to Home Screen!</string>
+    <string name="login_error">Invalid username or password</string>
+</resources>
