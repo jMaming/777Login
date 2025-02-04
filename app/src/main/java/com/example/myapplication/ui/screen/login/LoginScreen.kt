@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.screen.login
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,6 +31,7 @@ import com.example.myapplication.data.remote.ApiService
 import com.example.myapplication.ui.components.LoadingDialog
 import com.example.myapplication.ui.screen.home.HomeScreen
 import com.example.myapplication.ui.state.LoginState
+import com.example.myapplication.util.removeSpaces
 import com.example.myapplication.viewmodel.LoginViewModel
 
 @Composable
@@ -102,15 +104,7 @@ fun LoginScreen(loginViewModel: LoginViewModel) {
                 // Login Button
                 Button(
                     onClick = {
-                        if (loginViewModel.hasInternetConnection(context)) {
-                            loginViewModel.login(username, password)
-                        } else {
-                            Toast.makeText(
-                                context,
-                                "Please check your internet connection.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                        login(context, username, password, loginViewModel)
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -118,11 +112,38 @@ fun LoginScreen(loginViewModel: LoginViewModel) {
                 }
             }
         }
-        if (isLoading) {
-            LoadingDialog {
+    }
+    if (isLoading) {
+        LoadingDialog {
 
-            }
         }
+    }
+}
+
+private fun login(
+    context: Context,
+    username: String,
+    password: String,
+    loginViewModel: LoginViewModel
+) {
+    if (username.removeSpaces().isEmpty() || password.removeSpaces()
+            .isEmpty()
+    ) {
+        Toast.makeText(
+            context,
+            "Username and password should not be empty.",
+            Toast.LENGTH_SHORT
+        ).show()
+        return
+    }
+    if (loginViewModel.hasInternetConnection(context)) {
+        loginViewModel.login(username, password)
+    } else {
+        Toast.makeText(
+            context,
+            "Please check your internet connection.",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }
 
